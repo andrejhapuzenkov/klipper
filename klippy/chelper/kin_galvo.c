@@ -12,39 +12,39 @@
 #include "trapq.h" // move_get_coord
 
 static double
-fouraxes_stepper_x_calc_position(struct stepper_kinematics *sk, struct move *m
+galvo_stepper_x_calc_position(struct stepper_kinematics *sk, struct move *m
                              , double move_time)
 {
     return move_get_coord(m, move_time).x;
 }
 
 static double
-fouraxes_stepper_y_calc_position(struct stepper_kinematics *sk, struct move *m
+galvo_stepper_y_calc_position(struct stepper_kinematics *sk, struct move *m
                              , double move_time)
 {
     return move_get_coord(m, move_time).y;
 }
 
 static double
-fouraxes_stepper_z_calc_position(struct stepper_kinematics *sk, struct move *m
+galvo_stepper_z_calc_position(struct stepper_kinematics *sk, struct move *m
                              , double move_time)
 {
     return move_get_coord(m, move_time).z;
 }
 
 struct stepper_kinematics * __visible
-fouraxes_stepper_alloc(char axis)
+galvo_stepper_alloc(char axis)
 {
     struct stepper_kinematics *sk = malloc(sizeof(*sk));
     memset(sk, 0, sizeof(*sk));
     if (axis == 'x') {
-        sk->calc_position_cb = fouraxes_stepper_x_calc_position;
+        sk->calc_position_cb = galvo_stepper_x_calc_position;
         sk->active_flags = AF_X;
     } else if (axis == 'y') {
-        sk->calc_position_cb = fouraxes_stepper_y_calc_position;
+        sk->calc_position_cb = galvo_stepper_y_calc_position;
         sk->active_flags = AF_Y;
     } else if (axis == 'z') {
-        sk->calc_position_cb = fouraxes_stepper_z_calc_position;
+        sk->calc_position_cb = galvo_stepper_z_calc_position;
         sk->active_flags = AF_Z;
     }
     return sk;

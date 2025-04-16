@@ -7,7 +7,7 @@ import logging
 import stepper
 #from . import idex_modes
 
-class FouraxesKinematics:
+class GalvoKinematics:
     def __init__(self, toolhead, config):
         self.printer = config.get_printer()
         # Setup axis rails
@@ -16,7 +16,7 @@ class FouraxesKinematics:
         self.rails = [stepper.LookupMultiRail(config.getsection('stepper_' + n))
                       for n in 'xyz']
         for rail, axis in zip(self.rails, 'xyz'):
-            rail.setup_itersolve('fouraxes_stepper_alloc', axis.encode())
+            rail.setup_itersolve('galvo_stepper_alloc', axis.encode())
         ranges = [r.get_range() for r in self.rails]
         self.axes_min = toolhead.Coord(*[r[0] for r in ranges], e=0.)
         self.axes_max = toolhead.Coord(*[r[1] for r in ranges], e=0.)
@@ -130,4 +130,4 @@ class FouraxesKinematics:
         }
 
 def load_kinematics(toolhead, config):
-    return FouraxesKinematics(toolhead, config)
+    return GalvoKinematics(toolhead, config)
